@@ -1,0 +1,29 @@
+{
+  "name": "traefik-cert-extract",
+  "version": "1.0.0",
+  "description": "Traefik certificate extractor",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SloCompTech/traefik-cert-extract.git"
+  },
+  "keywords": [
+    "docker",
+    "traefik",
+    "acme.json",
+    "certificate",
+    "extract"
+  ],
+  "author": "Martin Dagarin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SloCompTech/traefik-cert-extract/issues"
+  },
+  "homepage": "https://github.com/SloCompTech/traefik-cert-extract#readme",
+  "dependencies": {
+    "yargs": "^15.3.1"
+  }
+}
