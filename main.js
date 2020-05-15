@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const fs = require('fs');
+const moment = require('moment');
 const path = require('path');
 const yargs = require('yargs');
 
@@ -104,7 +105,7 @@ for (const provider of providers) {
       if (argv.include.length > 0 && !argv.include.includes(domain)) // Not included domains
         continue;
 
-      console.info(`Extracted certificates for ${domain}`);
+      console.info(`${moment().format('YYYY-MM-DD HH:mm:ss')} Extracted certificates for ${domain}`);
 
       const domainDir = path.join(argv.directory, domain);
 
