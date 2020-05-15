@@ -1,4 +1,7 @@
 #!/usr/bin/with-contenv bash
+#
+# @see https://linux.die.net/man/1/inotifywait
+#
 
 if [ -n "$SKIP_APP" ]; then
   exit 0
