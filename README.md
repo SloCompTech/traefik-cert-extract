@@ -21,6 +21,7 @@ Options:
   -f, --file              File that contains Traefik certificates
                                                              [string] [required]
   -i, --include           Include domain                   [array] [default: []]
+  -r, --docker-restart    Restart docker containers with label tce.restart=true
                                                       [boolean] [default: false]
   -x, --exclude-provider  Exclude listed providers         [array] [default: []]
   -y, --include-provider  Only process listed providers    [array] [default: []]
@@ -34,6 +35,7 @@ Missing required arguments: d, f
 docker run --name traefik-extractor \
   -v cert_vol:/config \
   -v traefik_vol:/data \
+  -v /var/run/docker.socket:/var/run/docker.sock \
 IMAGETAG
 ```
 
@@ -44,6 +46,7 @@ services:
      volumes:
       - cert_vol:/config
       - traefik_vol:/data:ro
+      - /var/run/docker.sock:/var/run/docker.sock
      restart: always
 ```
 
@@ -51,9 +54,11 @@ services:
 
 |**Parameter**|**Function**|
 |:-----------:|:----------:|
+|`-e DOCKER_RESTART=true`|Enable docker restart on `acme.json` update (label: `tce.restart=true`)|
 |`-e FILE=acme.json`|`acme.json` file path inside `/data` container volume|
 |`-v $(pwd)/certs:/config`|Config volume (inside `certs` folder are certificates)|
 |`-v $(pwd)/data:/data`|Traefik volume (folder inside which is acme.json|
+|`-v /var/run/docker.sock:/var/run/docker.sock`|Enable access to docker (for container restart)|
 
 See [upstream image](https://github.com/SloCompTech/docker-baseimage) for additional parameters.
 

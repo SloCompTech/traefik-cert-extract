@@ -8,7 +8,7 @@ if [ -n "$SKIP_APP" ]; then
 fi
 
 while inotifywait -e modify -qq /data/$FILE; do
-  /app/main.js -f /data/$FILE -d /config/certs $ARGS
+  /app/main.js -f /data/$FILE -d /config/certs ${DOCKER_RESTART:+'-r'} $ARGS
 done
 if [ ! -f "/data/$FILE" ]; then
   sleep 60

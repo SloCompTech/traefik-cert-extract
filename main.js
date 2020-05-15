@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const Docker = require('dockerode');
 const fs = require('fs');
 const moment = require('moment');
 const path = require('path');
@@ -30,6 +31,12 @@ const argv = yargs
     default: [],
     description: 'Include domain',
     type: 'array',
+  })
+  .option('r', {
+    alias: 'docker-restart',
+    default: false,
+    description: 'Restart docker containers with label tce.restart=true',
+    type: 'boolean',
   })
   .option('x', {
     alias: 'exclude-provider',
@@ -126,4 +133,27 @@ for (const provider of providers) {
       fs.writeFileSync(path.join(domainDir, 'privkey.pem'), key, { encoding: 'utf8' });
     }
   }
+}
+
+// Restart docker containers
+if (argv.dockerRestart) {
+  const docker = new Docker({socketPath: '/var/run/docker.sock'});
+  docker.listContainers({
+    filters: {
+      label: {
+        'tce.restart': true
+      },
+      status: { running: true },
+    }
+  }).then((info) => {
+    for (const continfo of info) {
+      docker.getContainer(continfo.Id).restart().then(() => {
+        console.info(`Container ${continfo.Names.join(',')} restarted`);
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
+  }).catch((error) => {
+    console.log(error);
+  });
 }
