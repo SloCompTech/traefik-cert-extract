@@ -7,9 +7,17 @@ if [ -n "$SKIP_APP" ]; then
   exit 0
 fi
 
+# Check if file exists
+if [ ! -f "/data/$FILE" ]; then
+  echo "File: $FILE does not exist"
+  sleep 60
+  exit 0
+fi
+
+# Run once on startup
+/app/main.js -f /data/$FILE -d /config/certs ${DOCKER_RESTART:+'-r'} $ARGS
+
+# Run when file modified
 while inotifywait -e modify -qq /data/$FILE; do
   /app/main.js -f /data/$FILE -d /config/certs ${DOCKER_RESTART:+'-r'} $ARGS
 done
-if [ ! -f "/data/$FILE" ]; then
-  sleep 60
-fi
