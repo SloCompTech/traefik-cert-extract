@@ -54,6 +54,7 @@ services:
 
 |**Parameter**|**Function**|
 |:-----------:|:----------:|
+|`-e ARGS="..."`|Add additional arguments for `main.js` script|
 |`-e DOCKER_RESTART=true`|Enable docker restart on `acme.json` update (label: `tce.restart=true`)|
 |`-e FILE=acme.json`|`acme.json` file path inside `/data` container volume|
 |`-v $(pwd)/certs:/config`|Config volume (inside `certs` folder are certificates)|
