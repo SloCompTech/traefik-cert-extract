@@ -42,7 +42,7 @@ IMAGETAG
 ``` yaml
 services:
   certs:
-     image: slocomptech/traefik-certificate-extractor
+     image: slocomptech/traefik-cert-extractor
      volumes:
       - cert_vol:/config
       - traefik_vol:/data:ro
