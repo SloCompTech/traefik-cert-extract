@@ -71,10 +71,12 @@ certs
     cert.pem
     chain.pem
     fullchain.pem
-    privkey.pem
+    privkey.pem (RSA PRIVATE KEY)
+    privkey2.pem (PRIVATE KEY)
   sub.example.org
     cert.pem
     chain.pem
     fullchain.pem
     privkey.pem
+    privkey2.pem
 ```

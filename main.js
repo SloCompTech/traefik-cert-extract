@@ -90,7 +90,8 @@ for (const provider of providers) {
   for (const certficate of data[provider].Certificates) {
     // Extract certificates from acme.json
     const fullchain = Buffer.from(certficate.certificate, 'base64').toString('utf-8');
-    const key = Buffer.from(certficate.key, 'base64').toString('utf-8').replace(/RSA\s/g,'');
+    const key = Buffer.from(certficate.key, 'base64').toString('utf-8');
+    const key2 = key.replace(/RSA PRIVATE KEY-----/g,'PRIVATE KEY-----');
     
     // Fullchain processing
     const index = fullchain.indexOf('-----END CERTIFICATE-----');
@@ -129,8 +130,11 @@ for (const provider of providers) {
       // Full chain file
       fs.writeFileSync(path.join(domainDir, 'fullchain.pem'), fullchain, { encoding: 'utf8' });
 
-      // Private key file
+      // Private key file (RSA PRIVATE KEY)
       fs.writeFileSync(path.join(domainDir, 'privkey.pem'), key, { encoding: 'utf8' });
+
+      // Private key file (PRIVATE KEY)
+      fs.writeFileSync(path.join(domainDir, 'privkey2.pem'), key2, { encoding: 'utf8' });
     }
   }
 }
